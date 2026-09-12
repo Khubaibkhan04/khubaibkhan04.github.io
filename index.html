@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Khubaib Khan — Computer Game Developer. Unity and Unreal Engine 5. Heist Protocol, Arcade Fighter, open-world sandbox and VR projects.">
+<meta name="author" content="Khubaib Khan">
+<meta property="og:title" content="Khubaib Khan — Game Developer">
+<meta property="og:description" content="Unity &amp; Unreal Engine developer building multiplayer netcode, combat systems, vehicles and AI.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E">
+<title>Khubaib Khan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap">
+
+<style>
+/* ============ Tokens ============
+   Committed single-theme: a dark arcade/console world.
+   Every colour is painted explicitly so the page holds on any host ground. */
+:root{
+  --ink-950:#040409;
+  --ink-900:#0a0a12;
+  --ink-850:#0f0f1a;
+  --ink-800:#15151f;
+  --line:rgba(167,139,250,.14);
+  --line-soft:rgba(255,255,255,.07);
+  --text:#eceaf4;
+  --text-dim:rgba(236,234,244,.62);
+  --text-faint:rgba(236,234,244,.38);
+  --violet:#8b5cf6;
+  --violet-lt:#a78bfa;
+  --mint:#34d399;
+  --mint-lt:#6ee7b7;
+  --amber:#f0b429;
+  --glass:rgba(255,255,255,.035);
+  --glass-2:rgba(255,255,255,.06);
+  --shadow:0 18px 48px rgba(0,0,0,.55);
+  --r-sm:8px; --r-md:14px; --r-lg:22px;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Instrument Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --display:"Syne","Instrument Sans",system-ui,sans-serif;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(1100px 620px at 18% -8%, rgba(139,92,246,.20), transparent 62%),
+    radial-gradient(900px 560px at 88% 6%, rgba(52,211,153,.11), transparent 60%),
+    linear-gradient(#0a0a12, #040409 60%);
+  background-color:var(--ink-950);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding-inline:20px}
+
+/* ---- shared type ---- */
+.eyebrow{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mint);display:flex;align-items:center;gap:.75rem;margin:0 0 1rem;
+}
+.eyebrow::before{content:"";height:1px;width:34px;background:linear-gradient(90deg,transparent,var(--mint))}
+h2.sec{
+  font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,4.4vw,3rem);
+  line-height:1.05;margin:0 0 .6rem;letter-spacing:-.02em;text-wrap:balance;
+}
+.sec-note{color:var(--text-dim);max-width:62ch;margin:0 0 2.6rem;font-size:1.02rem}
+section{padding-block:clamp(64px,9vw,120px);position:relative}
+
+/* ============ Nav ============ */
+.nav{
+  position:sticky;top:0;z-index:60;
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  background:rgba(4,4,9,.72);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:62px}
+.brand{font-family:var(--display);font-weight:800;font-size:1.02rem;letter-spacing:-.01em;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+.nav-links{display:flex;gap:1.6rem;font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase}
+.nav-links a{color:var(--text-dim);text-decoration:none;transition:color .18s}
+.nav-links a:hover{color:var(--text)}
+@media (max-width:760px){.nav-links{display:none}}
+
+/* ============ Hero ============ */
+.hero{padding-block:clamp(56px,10vw,104px) clamp(56px,8vw,96px);overflow:hidden}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(139,92,246,.075) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(139,92,246,.075) 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(70% 58% at 40% 30%,#000 30%,transparent 100%);
+  -webkit-mask-image:radial-gradient(70% 58% at 40% 30%,#000 30%,transparent 100%);
+}
+.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (max-width:900px){.hero-in{grid-template-columns:1fr}}
+
+.tagline{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mint);display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;margin-bottom:1.4rem}
+.tagline .sep{color:rgba(255,255,255,.18)}
+.tagline .loc{color:var(--text-faint)}
+
+h1{
+  font-family:var(--display);font-weight:800;letter-spacing:-.035em;
+  font-size:clamp(3rem,9.5vw,6.4rem);line-height:.92;margin:0 0 1.4rem;
+}
+h1 .l1{display:block;background:linear-gradient(96deg,var(--violet-lt) 6%,#fff 52%,var(--mint-lt) 98%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .l2{display:block;background:linear-gradient(96deg,var(--mint-lt) 4%,var(--violet-lt) 58%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.lede{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--text-dim);max-width:36ch;margin:0 0 2rem;line-height:1.55}
+.lede b{color:var(--text);font-weight:600}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.85rem 1.5rem;border-radius:999px;transition:transform .2s,box-shadow .2s,background .2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-a{background:linear-gradient(100deg,var(--violet),var(--mint));color:#07070d;font-weight:700;box-shadow:0 10px 30px rgba(139,92,246,.32)}
+.btn-a:hover{box-shadow:0 14px 38px rgba(52,211,153,.34)}
+.btn-b{border:1px solid var(--line);background:var(--glass);color:var(--text)}
+.btn-b:hover{background:var(--glass-2);border-color:rgba(167,139,250,.34)}
+
+/* HUD stat panel — borrowed from the operative-select screen in Heist Protocol */
+.hud{
+  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--glass);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);padding:1.5rem;position:relative;overflow:hidden;
+}
+.hud::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--mint),transparent);opacity:.6}
+.hud-hd{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1.15rem}
+.hud-hd .live{color:var(--mint)}
+.hud-row{display:flex;align-items:center;gap:.9rem;padding:.52rem 0}
+.hud-row .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-dim);width:108px;flex:none}
+.hud-row .track{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden}
+.hud-row .fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--violet),var(--mint));transform-origin:left;animation:grow .9s cubic-bezier(.2,.8,.25,1) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hud-row .v{font-family:var(--mono);font-size:.72rem;color:var(--text);width:38px;text-align:right;font-variant-numeric:tabular-nums}
+.hud-ft{margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:.34rem .66rem;border-radius:999px;border:1px solid var(--line);color:var(--text-dim);background:rgba(139,92,246,.07)}
+
+.enter{opacity:0;animation:enter .8s cubic-bezier(.22,.75,.3,1) forwards}
+.enter:nth-child(1){animation-delay:.05s}
+@keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.28s}.d4{animation-delay:.38s}.d5{animation-delay:.48s}
+
+/* ============ Marquee strip ============ */
+.strip{border-block:1px solid var(--line-soft);background:rgba(10,10,18,.6);overflow:hidden;padding-block:.85rem}
+.strip-track{display:flex;gap:2.6rem;width:max-content;animation:slide 34s linear infinite;font-family:var(--mono);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);white-space:nowrap}
+.strip-track span{display:flex;align-items:center;gap:2.6rem}
+.strip-track i{font-style:normal;color:var(--violet-lt)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ============ About ============ */
+.about-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem)}
+@media (max-width:860px){.about-grid{grid-template-columns:1fr}}
+.about-body p{color:var(--text-dim);font-size:1.05rem;margin:0 0 1.1rem;max-width:64ch}
+.about-body p strong{color:var(--text);font-weight:600}
+.facts{display:flex;flex-direction:column;gap:.1rem}
+.fact{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--line-soft)}
+.fact:first-child{border-top:1px solid var(--line-soft)}
+.fact dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin:0}
+.fact dd{margin:0;text-align:right;font-size:.95rem}
+.fact dd a{color:var(--mint-lt);text-decoration:none;border-bottom:1px solid rgba(52,211,153,.3)}
+.fact dd a:hover{color:var(--mint)}
+
+/* ============ Stack ============ */
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+.stack-card{border:1px solid var(--line-soft);border-radius:var(--r-md);padding:1.3rem 1.35rem;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012))}
+.stack-card h3{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--violet-lt);margin:0 0 .95rem;font-weight:500}
+.stack-card ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.stack-card li{font-size:.86rem;color:var(--text-dim);padding:.3rem .65rem;border-radius:var(--r-sm);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05)}
+
+/* ============ Projects ============ */
+.proj{border-top:1px solid var(--line-soft);padding-top:clamp(2.4rem,5vw,3.6rem);margin-top:clamp(2.4rem,5vw,3.6rem)}
+.proj:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.proj-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
+.proj-title{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3.4vw,2.3rem);letter-spacing:-.02em;margin:0;line-height:1.1}
+.badge{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;padding:.34rem .7rem;border-radius:999px;vertical-align:middle;margin-left:.7rem;white-space:nowrap}
+.badge-fyp{background:rgba(240,180,41,.13);border:1px solid rgba(240,180,41,.38);color:var(--amber)}
+.badge-uni{background:rgba(139,92,246,.13);border:1px solid rgba(139,92,246,.35);color:var(--violet-lt)}
+.proj-meta{display:flex;flex-wrap:wrap;gap:.4rem}
+
+.shot{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--ink-850);box-shadow:var(--shadow)}
+.shot img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center}
+.shot-cap{
+  position:absolute;left:0;right:0;bottom:0;padding:1.4rem 1.2rem .95rem;
+  background:linear-gradient(transparent,rgba(4,4,9,.86));
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:rgba(236,234,244,.82);
+}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:.55rem;margin-top:.7rem}
+.thumb{padding:0;border:1px solid var(--line-soft);border-radius:var(--r-sm);overflow:hidden;background:none;cursor:pointer;transition:border-color .18s,transform .18s;line-height:0}
+.thumb img{aspect-ratio:16/9;object-fit:cover;width:100%;opacity:.5;transition:opacity .18s}
+.thumb:hover img{opacity:.85}
+.thumb[aria-current="true"]{border-color:var(--mint);transform:translateY(-2px)}
+.thumb[aria-current="true"] img{opacity:1}
+
+.proj-cols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(1.4rem,3.5vw,2.6rem);align-items:start}
+@media (max-width:900px){.proj-cols{grid-template-columns:1fr}}
+.proj-side h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:0 0 .85rem;font-weight:500}
+.proj-side ul{list-style:none;margin:0 0 1.5rem;padding:0;display:flex;flex-direction:column;gap:.75rem}
+.proj-side li{position:relative;padding-left:1.15rem;color:var(--text-dim);font-size:.95rem;line-height:1.55}
+.proj-side li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:1px;background:var(--violet);transform:rotate(45deg)}
+.proj-side li b{color:var(--text);font-weight:600}
+.proj-blurb{color:var(--text-dim);font-size:1rem;margin:0 0 1.5rem;max-width:60ch}
+
+/* ============ Extra work ============ */
+.more-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.more-card{border:1px solid var(--line-soft);border-radius:var(--r-md);padding:1.4rem;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));display:flex;flex-direction:column;gap:.7rem}
+.more-card h3{font-family:var(--display);font-weight:700;font-size:1.12rem;margin:0}
+.more-card p{margin:0;color:var(--text-dim);font-size:.92rem}
+.more-card .tools{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-top:auto;padding-top:.5rem}
+
+/* ============ Timeline ============ */
+.tl{position:relative;padding-left:1.9rem}
+.tl::before{content:"";position:absolute;left:5px;top:.5rem;bottom:.5rem;width:1px;background:linear-gradient(var(--violet),rgba(52,211,153,.5),transparent)}
+.job{position:relative;padding-bottom:2.4rem}
+.job:last-child{padding-bottom:0}
+.job::before{content:"";position:absolute;left:-1.9rem;top:.45rem;width:11px;height:11px;border-radius:50%;background:var(--ink-950);border:2px solid var(--violet)}
+.job.now::before{border-color:var(--mint);box-shadow:0 0 0 4px rgba(52,211,153,.14)}
+.job-hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 1rem;margin-bottom:.15rem}
+.job h3{font-family:var(--display);font-weight:700;font-size:1.22rem;margin:0}
+.job .when{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);white-space:nowrap}
+.job .where{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;color:var(--mint);margin:0 0 .8rem}
+.job ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.job li{position:relative;padding-left:1.1rem;color:var(--text-dim);font-size:.95rem;max-width:68ch}
+.job li::before{content:"";position:absolute;left:0;top:.66em;width:6px;height:1px;background:var(--text-faint)}
+
+/* ============ Contact ============ */
+.contact{border-top:1px solid var(--line-soft)}
+.contact-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (max-width:860px){.contact-in{grid-template-columns:1fr}}
+.mail{font-family:var(--display);font-weight:700;font-size:clamp(1.25rem,3.2vw,2rem);letter-spacing:-.02em;text-decoration:none;word-break:break-all;background:linear-gradient(96deg,#fff,var(--mint-lt));-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;margin-bottom:1.4rem}
+.links{display:flex;flex-direction:column;gap:.1rem}
+.link{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-soft);text-decoration:none;color:var(--text);transition:padding-left .2s,color .2s}
+.link:first-child{border-top:1px solid var(--line-soft)}
+.link:hover{padding-left:.5rem;color:var(--mint-lt)}
+.link .lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint)}
+.link .val{font-size:.96rem;text-align:right;word-break:break-word}
+
+footer{border-top:1px solid var(--line-soft);padding-block:2.2rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
+.foot-in{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:space-between;align-items:center}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .enter{opacity:1}
+  .strip-track{animation:none}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="dot"></span>Khubaib Khan</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#stack">Stack</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="wrap hero-in">
+      <div>
+        <p class="tagline enter d1">
+          <span>Computer Game Developer</span>
+          <span class="sep">/</span>
+          <span class="loc">Islamabad, Pakistan</span>
+        </p>
+        <h1 class="enter d2"><span class="l1">Khubaib</span><span class="l2">Khan</span></h1>
+        <p class="lede enter d3">
+          I build <b>playable systems</b> — multiplayer netcode, combat, vehicles and AI —
+          in Unity and Unreal Engine.
+        </p>
+        <div class="cta-row enter d4">
+          <a class="btn btn-a" href="#work">View Work</a>
+          <a class="btn btn-b" href="#contact">Get In Touch</a>
+        </div>
+      </div>
+
+      <aside class="hud enter d5" aria-label="Developer profile summary">
+        <div class="hud-hd"><span>Operative · Khubaib</span><span class="live">Available</span></div>
+        <div class="hud-row"><span class="k">Unity / C#</span><span class="track"><span class="fill" style="width:94%;animation-delay:.6s"></span></span><span class="v">94</span></div>
+        <div class="hud-row"><span class="k">Multiplayer</span><span class="track"><span class="fill" style="width:85%;animation-delay:.7s"></span></span><span class="v">85</span></div>
+        <div class="hud-row"><span class="k">Gameplay AI</span><span class="track"><span class="fill" style="width:82%;animation-delay:.8s"></span></span><span class="v">82</span></div>
+        <div class="hud-row"><span class="k">UI / UX</span><span class="track"><span class="fill" style="width:88%;animation-delay:.9s"></span></span><span class="v">88</span></div>
+        <div class="hud-row"><span class="k">Optimization</span><span class="track"><span class="fill" style="width:80%;animation-delay:1s"></span></span><span class="v">80</span></div>
+        <div class="hud-ft">
+          <span class="chip">4 Shipped Builds</span>
+          <span class="chip">PC · Mobile · VR</span>
+          <span class="chip">BSCGD 2026</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>Unity <i>◆</i> Unreal Engine 5 <i>◆</i> C# <i>◆</i> C++ <i>◆</i> Photon PUN <i>◆</i> XR Toolkit <i>◆</i> Mixamo <i>◆</i> Blender <i>◆</i> Photoshop <i>◆</i></span>
+      <span>Unity <i>◆</i> Unreal Engine 5 <i>◆</i> C# <i>◆</i> C++ <i>◆</i> Photon PUN <i>◆</i> XR Toolkit <i>◆</i> Mixamo <i>◆</i> Blender <i>◆</i> Photoshop <i>◆</i></span>
+    </div>
+  </div>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-body">
+        <p class="eyebrow">About</p>
+        <h2 class="sec">Systems first, polish always.</h2>
+        <p>
+          I'm a final-year <strong>Computer Game Development</strong> student at Air University Islamabad
+          and a working Unity developer. Most of what I build sits under the surface: the netcode that keeps
+          four players in sync, the state machine behind a combo, the AI that decides when a policeman gives chase.
+        </p>
+        <p>
+          My final-year project, <strong>Heist Protocol</strong>, is a four-player co-op heist shooter built on
+          Photon PUN — operative classes, a lobby with comms, objective chains and a mission clock. Around it
+          I've shipped a mobile 2D fighting game, an open-world sandbox with a full mission loop, and a VR lab
+          built on Unity's XR Interaction Toolkit.
+        </p>
+        <p>
+          I care about builds that actually run: profiling draw calls, pooling spawns, and trimming scenes until
+          the frame budget holds on the target device.
+        </p>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Degree</dt><dd>BS Computer Game Development</dd></div>
+        <div class="fact"><dt>University</dt><dd>Air University, Islamabad</dd></div>
+        <div class="fact"><dt>Duration</dt><dd>2022 &ndash; 2026 &middot; CGPA 3.2</dd></div>
+        <div class="fact"><dt>Engines</dt><dd>Unity &middot; Unreal Engine 5</dd></div>
+        <div class="fact"><dt>Languages</dt><dd>C# &middot; C++</dd></div>
+        <div class="fact"><dt>Status</dt><dd>Open to opportunities</dd></div>
+        <div class="fact"><dt>Email</dt><dd><a href="mailto:04khubaibkhan@gmail.com">04khubaibkhan@gmail.com</a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===================== STACK ===================== -->
+  <section id="stack">
+    <div class="wrap">
+      <p class="eyebrow">Toolkit</p>
+      <h2 class="sec">What I build with</h2>
+      <p class="sec-note">Engine-side work in Unity and Unreal, with the supporting art and networking tools I use to get a build shipped.</p>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h3>Engines</h3>
+          <ul><li>Unity</li><li>Unreal Engine 5</li><li>Unity XR Toolkit</li><li>ProBuilder</li></ul>
+        </div>
+        <div class="stack-card">
+          <h3>Programming</h3>
+          <ul><li>C#</li><li>C++</li><li>Blueprints</li><li>OOP &amp; design patterns</li></ul>
+        </div>
+        <div class="stack-card">
+          <h3>Multiplayer</h3>
+          <ul><li>Photon PUN</li><li>Lobbies &amp; rooms</li><li>RPC sync</li><li>Host authority</li></ul>
+        </div>
+        <div class="stack-card">
+          <h3>Gameplay</h3>
+          <ul><li>Character controllers</li><li>Vehicle physics</li><li>NavMesh AI</li><li>Save systems</li><li>Animator state machines</li></ul>
+        </div>
+        <div class="stack-card">
+          <h3>Art &amp; Assets</h3>
+          <ul><li>Blender</li><li>Mixamo</li><li>Photoshop</li><li>Texturing</li></ul>
+        </div>
+        <div class="stack-card">
+          <h3>Production</h3>
+          <ul><li>Profiling &amp; optimization</li><li>Git</li><li>Build pipelines</li><li>UI / UX implementation</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WORK ===================== -->
+  <section id="work">
+    <div class="wrap">
+      <p class="eyebrow">Selected Work</p>
+      <h2 class="sec">Four builds, four problems</h2>
+      <p class="sec-note">Every screenshot below is from a running build. Click the thumbnails to move through each project.</p>
+
+      <!-- ---- Heist Protocol ---- -->
+      <article class="proj" data-gallery>
+        <div class="proj-head">
+          <h3 class="proj-title">Heist Protocol<span class="badge badge-fyp">Final Year Project</span></h3>
+          <div class="proj-meta">
+            <span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Photon PUN</span><span class="chip">Co-op FPS</span>
+          </div>
+        </div>
+        <div class="proj-cols">
+          <div>
+            <figure class="shot" style="margin:0">
+              <img data-main src="img/heist-operatives.webp" alt="Heist Protocol operative selection screen showing four playable classes with stat bars">
+              <figcaption class="shot-cap" data-cap>Operative select — four classes with distinct hacking, stealth, combat and demolitions ratings.</figcaption>
+            </figure>
+            <div class="thumbs">
+              <button class="thumb" type="button" aria-current="true" data-src="img/heist-operatives.webp" data-cap="Operative select — four classes with distinct hacking, stealth, combat and demolitions ratings."><img src="img/heist-operatives.webp" alt="Operative select screen"></button>
+              <button class="thumb" type="button" data-src="img/heist-lobby.webp" data-cap="Operation Lahore lobby — four slots, ready states, host controls and a live comms feed."><img src="img/heist-lobby.webp" alt="Multiplayer lobby"></button>
+              <button class="thumb" type="button" data-src="img/heist-load.webp" data-cap="Mission briefing screen loading the Islamabad Bank co-op operation."><img src="img/heist-load.webp" alt="Mission loading screen"></button>
+              <button class="thumb" type="button" data-src="img/heist-street.webp" data-cap="Approach phase — objective list, mission clock and weapon HUD on the street outside the bank."><img src="img/heist-street.webp" alt="First-person view outside the bank"></button>
+              <button class="thumb" type="button" data-src="img/heist-interior.webp" data-cap="Bank interior — teller floor and security office where the vault key is hidden."><img src="img/heist-interior.webp" alt="Bank interior"></button>
+              <button class="thumb" type="button" data-src="img/heist-vault.webp" data-cap="Vault objective cleared — cash stacks behind the cage as the timer runs down."><img src="img/heist-vault.webp" alt="Bank vault"></button>
+            </div>
+          </div>
+          <div class="proj-side">
+            <p class="proj-blurb">A four-player co-op PvE heist shooter. A crew picks operatives, drops into a bank, and works a chain of objectives against a mission clock before law enforcement closes in.</p>
+            <h4>What I built</h4>
+            <ul>
+              <li><b>Photon PUN networking</b> — room creation, join codes, ready states and synchronised player actions across the crew.</li>
+              <li><b>Operative classes</b> with per-class stats and passive, active and ultimate abilities that change how a run plays.</li>
+              <li><b>Objective system</b> driving a live mission board: find the key, crack the locker, clear the police, reach the safe.</li>
+              <li><b>FPS combat</b> — weapon handling, recoil, reload and ammo, plus enemy police AI that reacts to alarms.</li>
+              <li><b>Mission HUD</b> — countdown timer, health, objective tracker and weapon panel, all driven from game state.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---- 2D Fighting Game ---- -->
+      <article class="proj" data-gallery>
+        <div class="proj-head">
+          <h3 class="proj-title">Arcade Fighter</h3>
+          <div class="proj-meta">
+            <span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Mobile</span><span class="chip">2D Combat</span>
+          </div>
+        </div>
+        <div class="proj-cols">
+          <div>
+            <figure class="shot" style="margin:0">
+              <img data-main src="img/fight-vs.webp" alt="Versus screen showing The Boxer Kingpin against Ninja Assassin with a loading bar">
+              <figcaption class="shot-cap" data-cap>Versus screen — matchup card and loading state between rounds.</figcaption>
+            </figure>
+            <div class="thumbs">
+              <button class="thumb" type="button" aria-current="true" data-src="img/fight-vs.webp" data-cap="Versus screen — matchup card and loading state between rounds."><img src="img/fight-vs.webp" alt="Versus screen"></button>
+              <button class="thumb" type="button" data-src="img/fight-street.webp" data-cap="Rain-soaked street stage — health bars, super meter and round timer over a ranged attack."><img src="img/fight-street.webp" alt="Street stage fight"></button>
+              <button class="thumb" type="button" data-src="img/fight-temple.webp" data-cap="Temple stage — Ninja Assassin against The Boxer Kingpin with target markers active."><img src="img/fight-temple.webp" alt="Temple stage fight"></button>
+              <button class="thumb" type="button" data-src="img/fight-garage.webp" data-cap="Garage stage — block shield active against the Mechanic's wrench attack."><img src="img/fight-garage.webp" alt="Garage stage fight"></button>
+              <button class="thumb" type="button" data-src="img/fight-menu.webp" data-cap="Main menu — animated rain backdrop with keyboard and touch navigation."><img src="img/fight-menu.webp" alt="Main menu"></button>
+              <button class="thumb" type="button" data-src="img/fight-win.webp" data-cap="Round result screen — advance to the next round or exit the run."><img src="img/fight-win.webp" alt="You Win screen"></button>
+            </div>
+          </div>
+          <div class="proj-side">
+            <p class="proj-blurb">A fast, arcade-style one-on-one fighter for mobile. Five fighters, four stages, and a round ladder that escalates as you win.</p>
+            <h4>What I built</h4>
+            <ul>
+              <li><b>Combat state machine</b> — punch, kick, weapon and block states with hit windows, stun and knockback.</li>
+              <li><b>Touch control layer</b> — on-screen d-pad and action buttons that map to the same input actions as keyboard play.</li>
+              <li><b>Round flow</b> — timers, health and super meters, win/lose resolution and progression into the next matchup.</li>
+              <li><b>Opponent AI</b> that reads distance and pressure to pick between approach, strike and block.</li>
+              <li><b>Stage &amp; roster pipeline</b> — swappable arenas and fighters driven from data rather than hard-coded scenes.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---- Open World ---- -->
+      <article class="proj" data-gallery>
+        <div class="proj-head">
+          <h3 class="proj-title">Open World Sandbox</h3>
+          <div class="proj-meta">
+            <span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Mixamo</span><span class="chip">Third Person</span>
+          </div>
+        </div>
+        <div class="proj-cols">
+          <div>
+            <figure class="shot" style="margin:0">
+              <img data-main src="img/ow-player.webp" alt="Third-person view of the player character in a city street with minimap and mission text">
+              <figcaption class="shot-cap" data-cap>Third-person traversal — mission prompt, wanted stars, cash counter and minimap.</figcaption>
+            </figure>
+            <div class="thumbs">
+              <button class="thumb" type="button" aria-current="true" data-src="img/ow-player.webp" data-cap="Third-person traversal — mission prompt, wanted stars, cash counter and minimap."><img src="img/ow-player.webp" alt="Third-person player view"></button>
+              <button class="thumb" type="button" data-src="img/ow-city.webp" data-cap="Driving through city traffic — AI vehicles running their own lanes and signals."><img src="img/ow-city.webp" alt="City traffic"></button>
+              <button class="thumb" type="button" data-src="img/ow-chars.webp" data-cap="NPC pedestrians and hostiles sharing the street with the player."><img src="img/ow-chars.webp" alt="NPC characters in the street"></button>
+            </div>
+          </div>
+          <div class="proj-side">
+            <p class="proj-blurb">A drivable, walkable city with one complete mission running end to end — from the objective marker to the shootout to the save point.</p>
+            <h4>What I built</h4>
+            <ul>
+              <li><b>Third-person controller</b> with camera rig, aim mode, cover-adjacent shooting and seamless vehicle entry.</li>
+              <li><b>Vehicle system</b> — physics-driven driving, damage and a traffic layer of AI cars that keep the city alive.</li>
+              <li><b>Police &amp; NPC AI</b> — a wanted-level system where stars escalate the response against you.</li>
+              <li><b>Mission &amp; save system</b> — objective chain, checkpoint saves and a restore that returns money, weapons and progress.</li>
+              <li><b>HUD suite</b> — minimap, health, ammo, wanted stars and mission text, all rebuilt from scratch.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---- VR ---- -->
+      <article class="proj">
+        <div class="proj-head">
+          <h3 class="proj-title">VR Lab Experience<span class="badge badge-uni">Academic</span></h3>
+          <div class="proj-meta">
+            <span class="chip">Unity 2022.3</span><span class="chip">XR Toolkit</span><span class="chip">C#</span><span class="chip">Room Scale</span>
+          </div>
+        </div>
+        <div class="proj-cols">
+          <div class="proj-side">
+            <p class="proj-blurb">A room-scale VR environment built for a university XR module — an office and lab interior you can walk, grab and interact with, prototyped against the XR Device Simulator before headset testing.</p>
+            <h4>What I built</h4>
+            <ul>
+              <li><b>XR Interaction Toolkit rig</b> — tracked hand models with grab, hover and select interactions on lab props.</li>
+              <li><b>Locomotion</b> — continuous movement and teleport anchors tuned to keep comfort acceptable indoors.</li>
+              <li><b>Interactable objects</b> — drawers, cabinets and equipment with socket-based placement.</li>
+              <li><b>Simulator-first workflow</b> — iterated in the XR Device Simulator so the scene could be tested without a headset in the loop.</li>
+            </ul>
+          </div>
+          <div class="proj-side">
+            <h4>Why it matters</h4>
+            <ul>
+              <li>Proves the same gameplay thinking carries into <b>spatial input</b>, where the interaction model changes completely.</li>
+              <li>Forced a hard <b>performance budget</b> — VR leaves no room for the frame cost a flat build tolerates.</li>
+              <li>Built the habit of <b>designing for comfort</b>, not just for mechanics.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== MORE ===================== -->
+  <section id="more">
+    <div class="wrap">
+      <p class="eyebrow">Also Built</p>
+      <h2 class="sec">Smaller projects</h2>
+      <p class="sec-note">Earlier builds where a single system was the point.</p>
+      <div class="more-grid">
+        <div class="more-card">
+          <h3>China Dynasty</h3>
+          <p>A 2D platformer with sword-throwing and melee combat against AI enemies, an in-game shop paid for in virtual currency, and saved progress across sessions.</p>
+          <p class="tools">Unity · Photoshop</p>
+        </div>
+        <div class="more-card">
+          <h3>Parking Simulator</h3>
+          <p>A physics-based car simulator with a custom car modelled and textured in Blender, realistic driving handling, and a UI set designed in Photoshop.</p>
+          <p class="tools">Unity · C# · Blender · Photoshop</p>
+        </div>
+        <div class="more-card">
+          <h3>Endless Runner</h3>
+          <p>Commercial Unity title at Block Gen Games — player controls, procedural obstacle spawning, scoring and difficulty progression, plus the full menu and HUD layer.</p>
+          <p class="tools">Unity · C#</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section id="experience">
+    <div class="wrap">
+      <p class="eyebrow">Experience</p>
+      <h2 class="sec">Where I've worked</h2>
+      <div class="tl">
+        <div class="job now">
+          <div class="job-hd"><h3>Unity Game Developer</h3><span class="when">Jul 2026 &mdash; Present</span></div>
+          <p class="where">Devdaa</p>
+          <ul>
+            <li>Building and maintaining Unity gameplay systems on live production titles.</li>
+            <li>Implementing gameplay features, UI flows and interaction logic from design through to build.</li>
+            <li>Debugging and profiling across builds to keep performance and stability on target.</li>
+          </ul>
+        </div>
+        <div class="job now">
+          <div class="job-hd"><h3>Unity Developer</h3><span class="when">Sep 2025 &mdash; Present</span></div>
+          <p class="where">Block Gen Games</p>
+          <ul>
+            <li>Engineered gameplay systems and game logic for a Unity endless runner — player controls, obstacle spawning, scoring and progression.</li>
+            <li>Implemented responsive UI/UX: navigation menus, in-game HUD, settings panels and result screens.</li>
+            <li>Optimised performance through debugging, code refinement and asset integration for a stable, polished build.</li>
+          </ul>
+        </div>
+        <div class="job">
+          <div class="job-hd"><h3>Junior Unity Developer</h3><span class="when">Jul 2025 &mdash; Sep 2025</span></div>
+          <p class="where">Virtual Dive Studio</p>
+          <ul>
+            <li>Developed a complete 2D platformer in Unity, writing generic, reusable systems for scalability.</li>
+            <li>Contributed to 3D projects: AI systems, car controller mechanics, third-person camera and police AI.</li>
+            <li>Designed and integrated a game saving system to carry player progression across sessions.</li>
+          </ul>
+        </div>
+        <div class="job">
+          <div class="job-hd"><h3>Computer Game Developer</h3><span class="when">Sep 2023 &mdash; Jun 2025</span></div>
+          <p class="where">Self-Employed</p>
+          <ul>
+            <li>Built interactive games end to end in Unity for independent clients and personal releases.</li>
+            <li>Implemented multiplayer functionality to create social, real-time gaming experiences.</li>
+            <li>Designed and optimised 3D character models and assets for seamless in-game integration.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="contact">
+    <div class="wrap contact-in">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 class="sec">Let's build something playable.</h2>
+        <p class="sec-note" style="margin-bottom:1.6rem">Open to game developer roles, internships and freelance Unity work — locally in Islamabad or remote.</p>
+        <a class="mail" href="mailto:04khubaibkhan@gmail.com">04khubaibkhan@gmail.com</a>
+      </div>
+      <div class="links">
+        <a class="link" href="mailto:04khubaibkhan@gmail.com"><span class="lbl">Email</span><span class="val">04khubaibkhan@gmail.com</span></a>
+        <a class="link" href="tel:+923092570366"><span class="lbl">Phone</span><span class="val">+92 309 2570366</span></a>
+        <a class="link" href="https://www.linkedin.com/in/khubaibkhan0420/" target="_blank" rel="noopener"><span class="lbl">LinkedIn</span><span class="val">khubaibkhan0420</span></a>
+        <a class="link" href="https://drive.google.com/drive/folders/1Sf0_BiiPnICaEwgZ_yvMpaSH85CyojB_?usp=sharing" target="_blank" rel="noopener"><span class="lbl">Builds</span><span class="val">Gameplay footage &amp; builds</span></a>
+        <a class="link" href="#work"><span class="lbl">Location</span><span class="val">Islamabad, Pakistan</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>&copy; 2026 Khubaib Khan</span>
+    <span>Built in Unity &middot; Shipped on the web</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  document.querySelectorAll('[data-gallery]').forEach(function (root) {
+    var main = root.querySelector('[data-main]');
+    var cap = root.querySelector('[data-cap]');
+    root.querySelectorAll('.thumb').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        root.querySelectorAll('.thumb').forEach(function (b) { b.setAttribute('aria-current', 'false'); });
+        btn.setAttribute('aria-current', 'true');
+        main.src = btn.dataset.src;
+        var inner = btn.querySelector('img');
+        if (inner) { main.alt = inner.alt; }
+        if (cap) { cap.textContent = btn.dataset.cap; }
+      });
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href');
+    if (id === '#') return;
+    var t = document.querySelector(id);
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
+
+</body>
+</html>
